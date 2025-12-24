@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "HTTP Chain Recorder",
+  "version": "1.0.0",
+  "description": "Record and replay HTTP workflows - capture network requests with full headers and bodies for debugging and automation",
+  "permissions": [
+    "debugger",
+    "tabs",
+    "activeTab"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "http://127.0.0.1/*",
+      "https://localhost/*",
+      "https://127.0.0.1/*",
+      "http://localhost:3000/*",
+      "http://localhost:5173/*",
+      "http://localhost:5174/*",
+      "http://localhost:4173/*",
+      "http://localhost:8080/*",
+      "http://127.0.0.1:3000/*",
+      "http://127.0.0.1:5173/*",
+      "http://127.0.0.1:5174/*",
+      "http://127.0.0.1:4173/*",
+      "http://127.0.0.1:8080/*"
+    ]
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
