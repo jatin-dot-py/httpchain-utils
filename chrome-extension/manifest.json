@@ -10,6 +10,7 @@
   ],
   "externally_connectable": {
     "matches": [
+      "https://spectra-ui-two.vercel.app/*",
       "http://localhost/*",
       "http://127.0.0.1/*",
       "https://localhost/*",
