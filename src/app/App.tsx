@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { HttpChainWebRecorder, useBookmarkedRequests } from '@/features/recorder';
 
 // Hardcoded extension ID - treat this file as the consumer of the package
-const EXTENSION_ID = 'cafgjpepoghidgecnbogbfcogflnbcma';
+const EXTENSION_ID = 'gonddkkfaldfhpkeacnccofcnlddjpag';
 
 export function App() {
     // Use the exported hook to subscribe to bookmarked requests
@@ -17,7 +17,7 @@ export function App() {
         <div className="h-screen w-screen bg-background overflow-hidden">
             <HttpChainWebRecorder
                 extensionId={EXTENSION_ID}
-                maxRequestsWarningThreshold={1000}
+                maxRequestsWarningThreshold={500}
                 maxTabsWarningThreshold={3}
             />
         </div>
