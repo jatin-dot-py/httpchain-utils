@@ -24,7 +24,8 @@ function HighlightedText({ text, highlight }: { text: string; highlight: string 
     );
 }
 
-function truncateUrl(url: string, maxLen = 60): string {
+function truncateUrl(url: string | undefined | null, maxLen = 60): string {
+    if (!url) return '';
     try {
         const parsed = new URL(url);
         const path = parsed.pathname + parsed.search;

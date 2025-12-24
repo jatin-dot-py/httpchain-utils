@@ -4,7 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Copy, Check, Globe, Bookmark, BookmarkCheck } from 'lucide-react';
 import { useRecorderStore } from '@/features/recorder/store/recorderStore';
 
-function parseUrl(url: string): { protocol: string; host: string; path: string; isDataUrl: boolean } {
+function parseUrl(url: string | undefined | null): { protocol: string; host: string; path: string; isDataUrl: boolean } {
+    if (!url) {
+        return { protocol: '', host: '', path: '', isDataUrl: false };
+    }
+
     // Handle data: URLs specially
     if (url.startsWith('data:')) {
         const mimeEnd = url.indexOf(',');

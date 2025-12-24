@@ -1,7 +1,7 @@
 import { create as ae } from "zustand";
 import { jsx as t, jsxs as i, Fragment as v } from "react/jsx-runtime";
-import { useEffect as W, useMemo as H, useRef as se, useState as A, useCallback as re } from "react";
-import { Search as oe, Trash2 as ie, Play as $, Square as le, Bookmark as Q, BookmarkCheck as ce, Globe as de, Check as ue, Copy as he, FileInput as me, Code as pe, ArrowDownToLine as fe, Database as ge, Braces as U, Cookie as xe, Radio as be, Unplug as ve, ExternalLink as Ne } from "lucide-react";
+import { useEffect as W, useMemo as U, useRef as se, useState as A, useCallback as re } from "react";
+import { Search as oe, Trash2 as ie, Play as $, Square as le, Bookmark as Q, BookmarkCheck as ce, Globe as de, Check as ue, Copy as he, FileInput as me, Code as pe, ArrowDownToLine as fe, Database as ge, Braces as H, Cookie as xe, Radio as be, Unplug as ve, ExternalLink as Ne } from "lucide-react";
 import { clsx as Ce } from "clsx";
 import { twMerge as we } from "tailwind-merge";
 import { cva as G } from "class-variance-authority";
@@ -254,7 +254,7 @@ const z = new Ee(), Ie = {
     e({ hasSeenRequestsWarning: !0 });
   }
 }));
-function He(e) {
+function Ue(e) {
   const n = c((a) => a.connect), s = c((a) => a.setWarningConfig);
   return W(() => {
     n(e);
@@ -263,7 +263,7 @@ function He(e) {
 function h(...e) {
   return we(Ce(e));
 }
-function Ue({ className: e, type: n, ...s }) {
+function He({ className: e, type: n, ...s }) {
   return /* @__PURE__ */ t(
     "input",
     {
@@ -336,7 +336,7 @@ function D(e, n) {
   };
 }
 function F(e, n) {
-  return H(() => {
+  return U(() => {
     if (!n.trim())
       return e.map((a) => ({
         request: a,
@@ -361,12 +361,12 @@ function F(e, n) {
   }, [e, n]);
 }
 function Ae() {
-  const e = c((u) => u.searchQuery), n = c((u) => u.setSearchQuery), s = c((u) => u.clearRequests), a = c((u) => u.startCapture), o = c((u) => u.stopCapture), r = c((u) => u.isCapturing), d = c((u) => u.connectionStatus), l = c((u) => u.requests), m = H(() => Object.values(l), [l]), g = F(m, e), f = d === "connected";
+  const e = c((u) => u.searchQuery), n = c((u) => u.setSearchQuery), s = c((u) => u.clearRequests), a = c((u) => u.startCapture), o = c((u) => u.stopCapture), r = c((u) => u.isCapturing), d = c((u) => u.connectionStatus), l = c((u) => u.requests), m = U(() => Object.values(l), [l]), g = F(m, e), f = d === "connected";
   return /* @__PURE__ */ i("div", { className: "h-full p-3 space-y-3 bg-background overflow-hidden", children: [
     /* @__PURE__ */ i("div", { className: "relative", children: [
       /* @__PURE__ */ t(oe, { className: "absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" }),
       /* @__PURE__ */ t(
-        Ue,
+        He,
         {
           type: "text",
           placeholder: "Search requests...",
@@ -469,6 +469,7 @@ function je({ text: e, highlight: n }) {
   ) });
 }
 function Le(e, n = 60) {
+  if (!e) return "";
   try {
     const s = new URL(e), a = s.pathname + s.search;
     return a.length <= n ? a : a.slice(0, n) + "...";
@@ -514,7 +515,7 @@ function Oe({ result: e, isSelected: n, isSaved: s, onSelect: a, style: o }) {
 }
 const Be = 72, Me = 104;
 function $e() {
-  const e = c((p) => p.searchQuery), n = c((p) => p.selectedRequestId), s = c((p) => p.setSelectedRequestId), a = c((p) => p.savedRequests), o = c((p) => p.isCapturing), r = c((p) => p.requests), d = H(() => Object.values(r), [r]), m = e.trim().length > 0 ? Me : Be, g = se(null), [f, u] = A({ width: 360, height: 400 }), T = F(d, e), S = H(() => {
+  const e = c((p) => p.searchQuery), n = c((p) => p.selectedRequestId), s = c((p) => p.setSelectedRequestId), a = c((p) => p.savedRequests), o = c((p) => p.isCapturing), r = c((p) => p.requests), d = U(() => Object.values(r), [r]), m = e.trim().length > 0 ? Me : Be, g = se(null), [f, u] = A({ width: 360, height: 400 }), T = F(d, e), S = U(() => {
     const p = [], y = [];
     return T.forEach((N) => {
       N.request.id in a ? p.push(N) : y.push(N);
@@ -579,6 +580,8 @@ function $e() {
   ] });
 }
 function Qe(e) {
+  if (!e)
+    return { protocol: "", host: "", path: "", isDataUrl: !1 };
   if (e.startsWith("data:")) {
     const n = e.indexOf(",");
     return {
@@ -946,9 +949,9 @@ function et() {
           value: "request",
           className: "h-full focus:outline-none data-[state=inactive]:hidden",
           children: /* @__PURE__ */ t(E, { className: "h-full", children: /* @__PURE__ */ i("div", { className: "p-4", children: [
-            /* @__PURE__ */ t(I, { data: a.requestHeaders, title: "Request Headers", icon: U }),
+            /* @__PURE__ */ t(I, { data: a.requestHeaders, title: "Request Headers", icon: H }),
             /* @__PURE__ */ t(I, { data: a.requestCookies, title: "Request Cookies", icon: xe }),
-            /* @__PURE__ */ t(I, { data: a.requestQueryParams, title: "Query Parameters", icon: U })
+            /* @__PURE__ */ t(I, { data: a.requestQueryParams, title: "Query Parameters", icon: H })
           ] }) })
         }
       ),
@@ -965,7 +968,7 @@ function et() {
         {
           value: "response",
           className: "h-full focus:outline-none data-[state=inactive]:hidden",
-          children: /* @__PURE__ */ t(E, { className: "h-full", children: /* @__PURE__ */ t("div", { className: "p-4", children: /* @__PURE__ */ t(I, { data: a.responseHeaders, title: "Response Headers", icon: U }) }) })
+          children: /* @__PURE__ */ t(E, { className: "h-full", children: /* @__PURE__ */ t("div", { className: "p-4", children: /* @__PURE__ */ t(I, { data: a.responseHeaders, title: "Response Headers", icon: H }) }) })
         }
       ),
       /* @__PURE__ */ t(
@@ -1209,7 +1212,7 @@ function vt({
   strictRequestsLimit: a = !1,
   className: o
 }) {
-  He(e);
+  Ue(e);
   const r = c((d) => d.setWarningConfig);
   return W(() => {
     r({
