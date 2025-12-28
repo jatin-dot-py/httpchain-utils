@@ -1,12 +1,4 @@
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { WarningDialog } from 'spectra/dialogs';
 import { useRecorderStore } from '@/features/recorder/store/recorderStore';
 
 /**
@@ -22,26 +14,14 @@ export function MaxTabsWarningDialog() {
     // Show if: over threshold AND not dismissed yet
     const shouldShow = attachedTabCount > maxTabsWarningThreshold && !hasSeenTabsWarning;
 
-    if (!shouldShow) {
-        return null;
-    }
-
     return (
-        <AlertDialog open={true}>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>⚠️ Many Tabs Attached</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        You are capturing from <strong>{attachedTabCount} tabs</strong>.
-                        This may significantly impact browser performance and memory usage.
-                    </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                    <AlertDialogAction onClick={dismissTabsWarning}>
-                        Okay
-                    </AlertDialogAction>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
+        <WarningDialog
+            open={shouldShow}
+            onOpenChange={(open) => !open && dismissTabsWarning()}
+            onProceed={dismissTabsWarning}
+            title="Many Tabs Attached"
+            description={`You are capturing from ${attachedTabCount} tabs. This may significantly impact browser performance and memory usage.`}
+            proceedText="Okay"
+        />
     );
 }

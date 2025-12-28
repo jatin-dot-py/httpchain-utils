@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { Search, Trash2, Play, Square } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Trash2, Play, Square } from 'lucide-react';
+import { TextInput } from 'spectra/input-primitives';
 import { Button } from '@/components/ui/button';
 import { useRecorderStore } from '@/features/recorder/store/recorderStore';
 import { useSearch } from '@/features/recorder/hooks/useSearch';
@@ -20,66 +20,49 @@ export function SidebarHeader() {
     const isConnected = connectionStatus === 'connected';
 
     return (
-        <div className="h-full p-3 space-y-3 bg-background overflow-hidden">
-            <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                    type="text"
-                    placeholder="Search requests..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 h-8"
-                />
-            </div>
-
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span>
-                        {searchQuery ? `${searchResults.length} of ${requests.length}` : requests.length} requests
-                    </span>
-                    {isCapturing && (
-                        <span className="flex items-center gap-1 text-destructive">
-                            <span className="h-2 w-2 rounded-full bg-current animate-pulse" />
-                            Live
-                        </span>
-                    )}
+        <div className="p-2 bg-background">
+            <div className="flex items-center gap-1">
+                <div className="flex-1">
+                    <TextInput
+                        value={searchQuery}
+                        onChange={setSearchQuery}
+                        placeholder={searchQuery
+                            ? `${searchResults.length} of ${requests.length} requests...`
+                            : `Search ${requests.length} requests...`}
+                    />
                 </div>
-
-                <div className="flex items-center gap-1">
+                <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={clearRequests}
+                    disabled={requests.length === 0}
+                    className="h-8 w-8 p-0 shrink-0"
+                    title="Clear all requests"
+                >
+                    <Trash2 className="h-4 w-4" />
+                </Button>
+                {!isCapturing ? (
                     <Button
                         size="sm"
                         variant="ghost"
-                        onClick={clearRequests}
-                        disabled={requests.length === 0}
-                        className="h-8 w-8 p-0"
-                        title="Clear all requests"
+                        onClick={startCapture}
+                        disabled={!isConnected}
+                        className="h-8 w-8 p-0 shrink-0 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-500/10"
+                        title="Start capture"
                     >
-                        <Trash2 className="h-4 w-4" />
+                        <Play className="h-4 w-4 fill-current" />
                     </Button>
-
-                    {!isCapturing ? (
-                        <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={startCapture}
-                            disabled={!isConnected}
-                            className="h-8 w-8 p-0 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-500/10"
-                            title="Start capture"
-                        >
-                            <Play className="h-4 w-4 fill-current" />
-                        </Button>
-                    ) : (
-                        <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={stopCapture}
-                            className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
-                            title="Stop capture"
-                        >
-                            <Square className="h-4 w-4 fill-current" />
-                        </Button>
-                    )}
-                </div>
+                ) : (
+                    <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={stopCapture}
+                        className="h-8 w-8 p-0 shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                        title="Stop capture"
+                    >
+                        <Square className="h-4 w-4 fill-current" />
+                    </Button>
+                )}
             </div>
         </div>
     );

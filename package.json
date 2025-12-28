@@ -25,17 +25,14 @@
         "preview": "vite preview"
     },
     "peerDependencies": {
-        "@base-ui/react": "^1.0.0",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
-        "flexsearch": "^0.7.0 || ^0.8.0",
         "lucide-react": ">=0.400.0",
         "radix-ui": "^1.0.0",
         "react": "^18.0.0 || ^19.0.0",
         "react-dom": "^18.0.0 || ^19.0.0",
-        "react-syntax-highlighter": "^15.0.0 || ^16.0.0",
-        "react-virtualized-auto-sizer": "^1.0.0",
         "react-window": "^2.0.0",
+        "spectra": "github:jatin-dot-py/spectra-ui#v0.0.1",
         "tailwind-merge": "^2.0.0 || ^3.0.0",
         "tailwindcss": "^4.0.0",
         "zustand": "^4.0.0 || ^5.0.0"

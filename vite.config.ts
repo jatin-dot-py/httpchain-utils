@@ -17,9 +17,9 @@ const external = [
     /^@radix-ui\/.*/,
     /^radix-ui\/.*/,
     /^lucide-react\/.*/,
-    /^react-syntax-highlighter\/.*/,
+    /^spectra\/.*/,
     /^zustand\/.*/,
-    /^flexsearch\/.*/,
+    /^react-window\/.*/,
 ]
 
 export default defineConfig({

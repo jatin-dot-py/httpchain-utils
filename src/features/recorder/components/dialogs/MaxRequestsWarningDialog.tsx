@@ -1,13 +1,4 @@
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { ConfirmDialog, WarningDialog } from 'spectra/dialogs';
 import { useRecorderStore } from '@/features/recorder/store/recorderStore';
 
 /**
@@ -15,8 +6,8 @@ import { useRecorderStore } from '@/features/recorder/store/recorderStore';
  * Shows only once per session (resets when requests are cleared).
  * 
  * Behavior depends on strictRequestsLimit:
- * - true: User MUST clear requests (no ignore option)
- * - false: User can dismiss but sees harsh warning
+ * - true: User MUST clear requests (no ignore option) -> WarningDialog
+ * - false: User can dismiss but sees harsh warning -> ConfirmDialog (Destructive)
  */
 export function MaxRequestsWarningDialog() {
     const maxRequestsWarningThreshold = useRecorderStore((s) => s.maxRequestsWarningThreshold);
@@ -30,45 +21,28 @@ export function MaxRequestsWarningDialog() {
     const shouldShow = requestCount > maxRequestsWarningThreshold &&
         (strictRequestsLimit || !hasSeenRequestsWarning);
 
-    if (!shouldShow) {
-        return null;
+    if (strictRequestsLimit) {
+        return (
+            <WarningDialog
+                open={shouldShow}
+                onOpenChange={() => { }} // Cannot be dismissed in strict mode purely via open change if we want it blocking
+                onProceed={clearRequests}
+                title="High Request Count — Risk of Data Loss"
+                description={`You have captured ${requestCount} requests. You must clear requests to continue.`}
+                proceedText="Clear Requests"
+            />
+        );
     }
 
     return (
-        <AlertDialog open={true}>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>⚠️ High Request Count — Risk of Data Loss</AlertDialogTitle>
-                    <AlertDialogDescription className="space-y-2">
-                        {strictRequestsLimit ? (
-                            <p>
-                                You have captured <strong>{requestCount}</strong> requests.
-                                <strong> You must clear requests to continue.</strong>
-                            </p>
-                        ) : (
-                            <>
-                                <p>
-                                    You have captured <strong>{requestCount}</strong> requests.
-                                    The application may become <strong>unresponsive</strong> or <strong>crash</strong>.
-                                </p>
-                                <p className="text-destructive font-medium">
-                                    ⚠️ If the page crashes, you will lose all captured data.
-                                </p>
-                            </>
-                        )}
-                    </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                    {!strictRequestsLimit && (
-                        <AlertDialogCancel onClick={dismissRequestsWarning}>
-                            I Understand the Risk
-                        </AlertDialogCancel>
-                    )}
-                    <AlertDialogAction onClick={clearRequests}>
-                        Clear Requests
-                    </AlertDialogAction>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
+        <ConfirmDialog
+            open={shouldShow}
+            onOpenChange={(open) => !open && dismissRequestsWarning()}
+            onConfirm={clearRequests}
+            title="High Request Count — Risk of Data Loss"
+            description={`You have captured ${requestCount} requests. The application may become unresponsive or crash. If the page crashes, you will lose all captured data.`}
+            confirmText="Clear Requests"
+            variant="destructive"
+        />
     );
 }

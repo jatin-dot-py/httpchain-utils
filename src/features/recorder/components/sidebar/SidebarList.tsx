@@ -4,6 +4,8 @@ import { useRecorderStore } from '@/features/recorder/store/recorderStore';
 import { useSearch } from '@/features/recorder/hooks/useSearch';
 import { SidebarItem } from './SidebarItem';
 import type { SearchResult } from '@/features/recorder/types';
+import { NoContent } from 'spectra/state';
+
 
 const ITEM_HEIGHT_DEFAULT = 72;
 const ITEM_HEIGHT_SEARCHING = 104;
@@ -13,7 +15,7 @@ export function SidebarList() {
     const selectedRequestId = useRecorderStore((s) => s.selectedRequestId);
     const setSelectedRequestId = useRecorderStore((s) => s.setSelectedRequestId);
     const savedRequests = useRecorderStore((s) => s.savedRequests);
-    const isCapturing = useRecorderStore((s) => s.isCapturing);
+    // const isCapturing = useRecorderStore((s) => s.isCapturing);
     const requestsRecord = useRecorderStore((s) => s.requests);
     const requests = useMemo(() => Object.values(requestsRecord), [requestsRecord]);
 
@@ -76,10 +78,7 @@ export function SidebarList() {
     if (sortedResults.length === 0) {
         return (
             <div ref={containerRef} className="h-full w-full flex flex-col items-center justify-center p-6 text-center text-muted-foreground">
-                <p className="text-sm font-medium">No requests</p>
-                <p className="mt-1 text-xs">
-                    {isCapturing ? 'Waiting for network activity...' : ''}
-                </p>
+                <NoContent title="No results found" />
             </div>
         );
     }
@@ -87,13 +86,7 @@ export function SidebarList() {
     return (
         <div ref={containerRef} className="h-full w-full overflow-hidden sidebar-list-container">
             <style>{`
-                .sidebar-list-container > div {
-                    scrollbar-width: none;
-                    -ms-overflow-style: none;
-                }
-                .sidebar-list-container > div::-webkit-scrollbar {
-                    display: none;
-                }
+                
             `}</style>
             <Grid
                 columnCount={1}

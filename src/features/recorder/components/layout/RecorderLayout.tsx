@@ -3,7 +3,6 @@ import { useRecorderStore } from '@/features/recorder/store/recorderStore';
 import { useExtensionConnection } from '@/features/recorder/hooks/useExtensionConnection';
 import { SidebarHeader } from '@/features/recorder/components/sidebar/SidebarHeader';
 import { SidebarList } from '@/features/recorder/components/sidebar/SidebarList';
-import { DetailsHeader } from '@/features/recorder/components/details/DetailsHeader';
 import { DetailsContent } from '@/features/recorder/components/details/DetailsContent';
 import { ConnectionIndicator } from '@/features/recorder/components/shared/ConnectionIndicator';
 import { EmptyState } from '@/features/recorder/components/shared/EmptyState';
@@ -12,7 +11,7 @@ import { MaxRequestsWarningDialog } from '@/features/recorder/components/dialogs
 import type { HttpChainWebRecorderProps, HttpChainRequestInfo } from '@/features/recorder/types';
 
 // Fixed header height in pixels - same for both panels to ensure aligned borders
-const HEADER_HEIGHT = 100;
+const HEADER_HEIGHT = 48;
 
 export function RecorderLayout({
     extensionId,
@@ -21,11 +20,9 @@ export function RecorderLayout({
     strictRequestsLimit = false,
     className,
 }: HttpChainWebRecorderProps) {
-    // Connect to extension and configure warnings
     useExtensionConnection(extensionId);
     const setWarningConfig = useRecorderStore((s) => s.setWarningConfig);
 
-    // Apply warning configuration from props
     useEffect(() => {
         setWarningConfig({
             maxTabs: maxTabsWarningThreshold,
@@ -50,11 +47,7 @@ export function RecorderLayout({
 
             {/* Details Panel - 75% width */}
             <div className="w-[75%] h-full flex flex-col">
-                {/* Header - fixed height (same as sidebar) */}
-                <div style={{ height: HEADER_HEIGHT, flexShrink: 0 }} className="border-b">
-                    <DetailsHeader />
-                </div>
-                {/* Content - fills remaining space */}
+                {/* Content - fills full space */}
                 <div className="flex-1 min-h-0 overflow-hidden">
                     <DetailsContent />
                 </div>
